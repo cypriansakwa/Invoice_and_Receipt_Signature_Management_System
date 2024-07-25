@@ -1,0 +1,11 @@
+[package]
+name = "zk_SNARKs_Event_Proof_Payment_Verified"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "1.0", features = ["v4"] }
+base64 = "0.13"
+ring = "0.16.20"
