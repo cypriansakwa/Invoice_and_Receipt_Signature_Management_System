@@ -1,8 +1,8 @@
 use ring::rand;
-use ring::signature::{self, KeyPair, Ed25519KeyPair, Signature};
+use ring::signature::{self, Ed25519KeyPair, Signature, KeyPair}; // Import KeyPair trait
 use serde::{Serialize, Deserialize};
 use uuid::Uuid;
-use base64;
+use base64::Engine; // Import the Engine trait for base64 encoding
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Invoice {
@@ -60,7 +60,7 @@ fn main() {
 
     // Add signature to the invoice
     let mut signed_invoice = invoice;
-    signed_invoice.signature = Some(base64::encode(invoice_signature.as_ref()));
+    signed_invoice.signature = Some(base64::engine::general_purpose::STANDARD.encode(invoice_signature.as_ref()));
 
     // Print the signed invoice
     println!("Signed Invoice: {:?}", signed_invoice);
@@ -81,7 +81,7 @@ fn main() {
 
     // Add signature to the receipt
     let mut signed_receipt = receipt;
-    signed_receipt.signature = Some(base64::encode(receipt_signature.as_ref()));
+    signed_receipt.signature = Some(base64::engine::general_purpose::STANDARD.encode(receipt_signature.as_ref()));
 
     // Print the signed receipt
     println!("Signed Receipt: {:?}", signed_receipt);
@@ -99,4 +99,6 @@ fn main() {
         println!("Receipt verification failed.");
     }
 }
+
+
 
